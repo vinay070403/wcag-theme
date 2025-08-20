@@ -1,0 +1,175 @@
+/*
+Theme Name: WCAG 2.2 Accessible Starter
+Theme URI: https://example.com/wcag-theme
+Author: You
+Author URI: https://example.com
+Description: An accessibility-ready WordPress starter theme implementing WCAG 2.2 best practices (semantic landmarks, focus styles, ARIA, keyboard navigation, color contrast, skip links, and wp.a11y.speak).
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.6
+Requires PHP: 7.4
+Tags: accessibility-ready, responsive, blog, one-column, two-columns
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: wcag-theme
+*/
+
+/* Base typography and color contrast */
+:root {
+  --text: #1c1c1c;
+  --bg: #ffffff;
+  --link: #004aad;
+  --link-hover: #003a87;
+  --muted: #555;
+  --focus: #005fcc;
+}
+
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Ensure logical headings style only (structure handled in templates) */
+h1, h2, h3, h4 { line-height: 1.25; }
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+}
+a:hover,
+a:focus {
+  color: var(--link-hover);
+}
+
+/* Focus indicators (WCAG 2.2: focus not obscured) */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 12px;
+  z-index: 1000;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* Layout */
+.site-header, .site-footer {
+  padding: 1rem;
+  background: #f5f5f7;
+  border-bottom: 1px solid #e6e6ea;
+}
+.site-footer { border-top: 1px solid #e6e6ea; border-bottom: 0; margin-top: 2rem; }
+
+.wrapper {
+  width: min(1100px, 95%);
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+@media (min-width: 900px) {
+  .main-grid {
+    grid-template-columns: 3fr 1fr;
+  }
+}
+
+/* Navigation */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid var(--text);
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.menu-toggle:focus-visible { outline-offset: 4px; }
+.primary-menu { list-style: none; padding: 0; margin: 0; display: none; }
+.primary-menu li { margin: 0; }
+.primary-menu a {
+  display: block;
+  padding: 12px 14px;
+  text-decoration: none;
+}
+@media (min-width: 900px) {
+  .menu-toggle { display: none; }
+  .primary-menu { display: flex !important; gap: 8px; }
+  .primary-menu a { padding: 10px 12px; }
+}
+
+/* Buttons and touch targets (WCAG 2.5.5 Target Size) */
+button, .button, .wp-element-button, .wp-block-button__link, a.button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 14px;
+}
+
+/* Forms */
+label { display: inline-block; margin-bottom: 6px; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #c9c9cf;
+  border-radius: 8px;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px color-mix(in hsl, var(--focus) 30%, transparent);
+}
+
+/* Screen reader only utility */
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+.screen-reader-text:focus {
+  clip: auto !important;
+  clip-path: none;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static !important;
+  width: auto;
+}
+
+/* Pagination */
+.pagination { display: flex; gap: 6px; flex-wrap: wrap; }
+.pagination a, .pagination span {
+  border: 1px solid #c9c9cf;
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-decoration: none;
+}
+.pagination .current { background: #e6f0ff; border-color: var(--focus); }
+
+/* Content */
+article { padding-bottom: 1rem; border-bottom: 1px solid #eee; }
+.post-meta { color: var(--muted); font-size: 0.95rem; }
